@@ -14,6 +14,9 @@ PyInitConfig C API
 
 .. versionadded:: 3.14
 
+.. versionchanged:: 3.15
+   Added to the :ref:`limited C API <limited-c-api>`.
+
 Python can be initialized with :c:func:`Py_InitializeFromInitConfig`.
 
 The :c:func:`Py_RunMain` function can be used to write a customized Python

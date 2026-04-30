@@ -112,7 +112,7 @@ __pragma(warning(disable: 4201))
 #include "sliceobject.h"
 #include "cpython/cellobject.h"
 #include "iterobject.h"
-#include "cpython/initconfig.h"
+#include "initconfig.h"
 #include "pystate.h"
 #include "cpython/genobject.h"
 #include "descrobject.h"

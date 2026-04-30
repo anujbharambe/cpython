@@ -2075,6 +2075,10 @@ Changed C APIs
   for ``NULL`` should be updated to call :c:macro:`PyDateTime_IMPORT` instead.
   (Contributed by Kumar Aditya in :gh:`141563`.)
 
+* The :ref:`PyInitConfig API <pyinitconfig_api>` (:pep:`741`) is now part of
+  the :ref:`limited C API <limited-c-api>`.
+  (Contributed by in :gh:`149163`.)
+
 Porting to Python 3.15
 ----------------------
 

@@ -2715,3 +2715,37 @@
     # Note: The `_reserved` member of this struct is for interal use only.
     # (The definition of 'full-abi' was clarified when this entry was added.)
     struct_abi_kind = 'full-abi'
+
+# PEP 741: Python Configuration C API -- added to limited API.
+
+[struct.PyInitConfig]
+    added = '3.15'
+    struct_abi_kind = 'opaque'
+[function.PyInitConfig_Create]
+    added = '3.15'
+[function.PyInitConfig_Free]
+    added = '3.15'
+[function.PyInitConfig_GetError]
+    added = '3.15'
+[function.PyInitConfig_GetExitCode]
+    added = '3.15'
+[function.PyInitConfig_HasOption]
+    added = '3.15'
+[function.PyInitConfig_GetInt]
+    added = '3.15'
+[function.PyInitConfig_GetStr]
+    added = '3.15'
+[function.PyInitConfig_GetStrList]
+    added = '3.15'
+[function.PyInitConfig_FreeStrList]
+    added = '3.15'
+[function.PyInitConfig_SetInt]
+    added = '3.15'
+[function.PyInitConfig_SetStr]
+    added = '3.15'
+[function.PyInitConfig_SetStrList]
+    added = '3.15'
+[function.PyInitConfig_AddModule]
+    added = '3.15'
+[function.Py_InitializeFromInitConfig]
+    added = '3.15'

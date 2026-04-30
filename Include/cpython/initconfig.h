@@ -1,6 +1,9 @@
 #ifndef Py_PYCORECONFIG_H
 #define Py_PYCORECONFIG_H
-#ifndef Py_LIMITED_API
+#ifndef Py_CPYTHON_INITCONFIG_H
+#  error "this header file must not be included directly"
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -284,52 +287,7 @@ PyAPI_FUNC(int) PyConfig_Set(const char *name, PyObject *value);
 PyAPI_FUNC(void) Py_GetArgcArgv(int *argc, wchar_t ***argv);
 
 
-// --- PyInitConfig ---------------------------------------------------------
-
-typedef struct PyInitConfig PyInitConfig;
-
-PyAPI_FUNC(PyInitConfig*) PyInitConfig_Create(void);
-PyAPI_FUNC(void) PyInitConfig_Free(PyInitConfig *config);
-
-PyAPI_FUNC(int) PyInitConfig_GetError(PyInitConfig* config,
-    const char **err_msg);
-PyAPI_FUNC(int) PyInitConfig_GetExitCode(PyInitConfig* config,
-    int *exitcode);
-
-PyAPI_FUNC(int) PyInitConfig_HasOption(PyInitConfig *config,
-    const char *name);
-PyAPI_FUNC(int) PyInitConfig_GetInt(PyInitConfig *config,
-    const char *name,
-    int64_t *value);
-PyAPI_FUNC(int) PyInitConfig_GetStr(PyInitConfig *config,
-    const char *name,
-    char **value);
-PyAPI_FUNC(int) PyInitConfig_GetStrList(PyInitConfig *config,
-    const char *name,
-    size_t *length,
-    char ***items);
-PyAPI_FUNC(void) PyInitConfig_FreeStrList(size_t length, char **items);
-
-PyAPI_FUNC(int) PyInitConfig_SetInt(PyInitConfig *config,
-    const char *name,
-    int64_t value);
-PyAPI_FUNC(int) PyInitConfig_SetStr(PyInitConfig *config,
-    const char *name,
-    const char *value);
-PyAPI_FUNC(int) PyInitConfig_SetStrList(PyInitConfig *config,
-    const char *name,
-    size_t length,
-    char * const *items);
-
-PyAPI_FUNC(int) PyInitConfig_AddModule(PyInitConfig *config,
-    const char *name,
-    PyObject* (*initfunc)(void));
-
-PyAPI_FUNC(int) Py_InitializeFromInitConfig(PyInitConfig *config);
-
-
 #ifdef __cplusplus
 }
 #endif
-#endif /* !Py_LIMITED_API */
 #endif /* !Py_PYCORECONFIG_H */
