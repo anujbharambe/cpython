@@ -73,7 +73,7 @@ Mode <devmode>` enabled; return ``-1`` on error:
 Create Config
 -------------
 
-.. c:struct:: PyInitConfig
+.. c:type:: PyInitConfig
 
    Opaque structure to configure the Python initialization.
 

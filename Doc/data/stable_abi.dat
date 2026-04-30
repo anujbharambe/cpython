@@ -363,7 +363,7 @@ func,PyImport_ImportModuleLevel,3.2,,
 func,PyImport_ImportModuleLevelObject,3.7,,
 func,PyImport_ReloadModule,3.2,,
 func,PyIndex_Check,3.8,,
-struct,PyInitConfig,3.15,,opaque
+type,PyInitConfig,3.15,,opaque
 func,PyInitConfig_AddModule,3.15,,
 func,PyInitConfig_Create,3.15,,
 func,PyInitConfig_Free,3.15,,
