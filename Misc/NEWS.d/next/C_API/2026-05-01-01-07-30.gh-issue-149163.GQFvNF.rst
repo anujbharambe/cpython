@@ -1,1 +1,1 @@
-Added the :pep:'741' :c:type:'PyInitConfig' API to the limited C API.
+Added the :pep:`741` :c:type:`PyInitConfig` API to the limited C API.
