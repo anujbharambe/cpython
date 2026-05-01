@@ -6879,12 +6879,10 @@ type_dealloc(PyObject *self)
     // Assert this is a heap-allocated type object
     _PyObject_ASSERT((PyObject *)type, type->tp_flags & Py_TPFLAGS_HEAPTYPE);
 
-    // Notify type watchers before teardown, using the same resurrection
-    // pattern that dict_dealloc() uses.  The type object is still fully
+    // Notify type watchers before teardown.  The type object is still fully
     // intact at this point (dict, bases, mro, name are all valid), so
     // callbacks can safely inspect it.
     if (type->tp_watched) {
-        _PyObject_ResurrectStart(self);
         PyInterpreterState *interp = _PyInterpreterState_GET();
         int bits = type->tp_watched;
         int i = 0;
@@ -6902,9 +6900,7 @@ type_dealloc(PyObject *self)
             i++;
             bits >>= 1;
         }
-        if (_PyObject_ResurrectEnd(self)) {
-            return;  // callback resurrected the object
-        }
+        assert(Py_REFCNT(self) == 0);
     }
 
     _PyObject_GC_UNTRACK(type);
