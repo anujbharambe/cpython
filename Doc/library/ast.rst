@@ -279,7 +279,7 @@ Literals
    and the constants :data:`None` and :data:`Ellipsis`.
 
    The ``kind`` attribute is an optional string. For string literals with a
-   ``u`` prefix (e.g. ``u'hello'``), ``kind`` is set to ``'u'``. For all other
+   ``u`` prefix, ``kind`` is set to ``'u'``. For all other
    constants, ``kind`` is ``None``.
 
    .. doctest::
