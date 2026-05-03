@@ -896,6 +896,10 @@ _PyType_CheckConsistency(PyTypeObject *type)
         CHECK(PyDict_Contains(lookup_tp_dict(type), &_Py_ID(__new__)) == 0);
     }
 
+    CHECK(type->tp_as_number != NULL);
+    CHECK(type->tp_as_sequence != NULL);
+    CHECK(type->tp_as_mapping != NULL);
+
     return 1;
 #undef CHECK
 }
@@ -8718,7 +8722,7 @@ inherit_slots(PyTypeObject *type, PyTypeObject *base)
 
     if (type->tp_as_number != NULL && base->tp_as_number != NULL) {
         basebase = base->tp_base;
-        if (basebase->tp_as_number == NULL)
+        if (basebase == NULL || basebase->tp_as_number == NULL)
             basebase = NULL;
         COPYNUM(nb_add);
         COPYNUM(nb_subtract);
@@ -8768,7 +8772,7 @@ inherit_slots(PyTypeObject *type, PyTypeObject *base)
 
     if (type->tp_as_sequence != NULL && base->tp_as_sequence != NULL) {
         basebase = base->tp_base;
-        if (basebase->tp_as_sequence == NULL)
+        if (basebase == NULL || basebase->tp_as_sequence == NULL)
             basebase = NULL;
         COPYSEQ(sq_length);
         COPYSEQ(sq_concat);
@@ -8782,7 +8786,7 @@ inherit_slots(PyTypeObject *type, PyTypeObject *base)
 
     if (type->tp_as_mapping != NULL && base->tp_as_mapping != NULL) {
         basebase = base->tp_base;
-        if (basebase->tp_as_mapping == NULL)
+        if (basebase == NULL || basebase->tp_as_mapping == NULL)
             basebase = NULL;
         COPYMAP(mp_length);
         COPYMAP(mp_subscript);
@@ -9155,6 +9159,10 @@ type_ready_mro(PyTypeObject *type, int initial)
 }
 
 
+static PyNumberMethods _Py_empty_number_methods = {0};
+static PySequenceMethods _Py_empty_sequence_methods = {0};
+static PyMappingMethods _Py_empty_mapping_methods = {0};
+
 // For static types, inherit tp_as_xxx structures from the base class
 // if it's NULL.
 //
@@ -9214,6 +9222,19 @@ type_ready_inherit(PyTypeObject *type)
 
     if (base != NULL) {
         type_ready_inherit_as_structs(type, base);
+    }
+
+    // Ensure tp_as_number, tp_as_sequence, and tp_as_mapping are never
+    // NULL after PyType_Ready. Types that don't provide their own struct
+    // share a common empty one.
+    if (type->tp_as_number == NULL) {
+        type->tp_as_number = &_Py_empty_number_methods;
+    }
+    if (type->tp_as_sequence == NULL) {
+        type->tp_as_sequence = &_Py_empty_sequence_methods;
+    }
+    if (type->tp_as_mapping == NULL) {
+        type->tp_as_mapping = &_Py_empty_mapping_methods;
     }
 
     /* Sanity check for tp_free. */
