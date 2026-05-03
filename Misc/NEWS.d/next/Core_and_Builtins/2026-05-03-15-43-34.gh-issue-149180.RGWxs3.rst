@@ -1,0 +1,3 @@
+During :func:`PyType_Ready`, ``tp_as_number``, ``tp_as_sequence``, and
+``tp_as_mapping`` are now guaranteed to be non-NULL for all ready types.
+Types that don't define their own struct share a common empty one.
