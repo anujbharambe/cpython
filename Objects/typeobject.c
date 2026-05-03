@@ -6883,6 +6883,7 @@ type_dealloc(PyObject *self)
     // intact at this point (dict, bases, mro, name are all valid), so
     // callbacks can safely inspect it.
     if (type->tp_watched) {
+        _PyObject_ResurrectStart(self);
         PyInterpreterState *interp = _PyInterpreterState_GET();
         int bits = type->tp_watched;
         int i = 0;
@@ -6900,7 +6901,9 @@ type_dealloc(PyObject *self)
             i++;
             bits >>= 1;
         }
-        assert(Py_REFCNT(self) == 0);
+        if (_PyObject_ResurrectEnd(self)) {
+            return;     // callback resurrected the object
+        }
     }
 
     _PyObject_GC_UNTRACK(type);
